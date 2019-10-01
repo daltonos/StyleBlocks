@@ -1,0 +1,184 @@
+//CONSTANTS
+
+//TEXT COLORS CONSTANTS
+TEXT_COLORS = {
+    highlighted: #007bff,
+    body: #333,
+    secondary: #666,
+    success: #28a745,
+    danger: #ff461a,
+    warning: #FCC443,
+    info: #17a2b8,
+    muted: #999999
+}
+
+//SURFACE COLORS CONSTANTS
+SF_COLORS = {
+    highlighted: #05BCB4,
+    body: white,
+    secondary: #05bcb4,
+    success: #33d8c8,
+    danger: #ff461a,
+    warning: #FCC443,
+    info: #05bcb4,
+    muted: TEXT_COLORS.muted
+}
+SF_COLOR_ACCENTS = {
+    highlighted: #FCC443,
+    body: white,
+    secondary: #FCC443,
+    success: #FCC443,
+    danger: #05bcb4,
+    warning: #FCC443,
+    info: #05bcb4,
+    muted: #f8f9fa
+}
+SF_TEXT_INVERSION_COLORS = {
+    highlighted: white,
+    body: TEXT_COLORS.body,
+    secondary: white,
+    success: white,
+    danger: white,
+    warning: TEXT_COLORS.body,
+    info: white,
+    muted: TEXT_COLORS.body
+}
+SF_TEXT_INVERSION_FOR_OPPOSE = {
+    highlighted: TEXT_COLORS.body,
+    body: TEXT_COLORS.body,
+    secondary: TEXT_COLORS.body,
+    success: TEXT_COLORS.body,
+    danger: white,
+    warning: TEXT_COLORS.body,
+    info: white,
+    muted: TEXT_COLORS.body
+}
+
+//LENGTH CONSTANTS
+LENGTHS = {
+    main: 2rem,
+    normal: 1rem
+}
+
+
+//CSS SELECTORS
+
+//TEXT CLASSES
+for key, value in TEXT_COLORS
+    .tc-{key}
+        color: value
+
+.ts-main-title
+    font-size: 1.875rem
+.ts-title
+    font-style: 1.5rem
+.ts-body
+    font-style: 1rem
+.ts-small
+    font-style: 0.8rem
+.t-bold
+    font-weight: bold
+.t-all-caps
+    text-transform: uppercase;
+
+//SURFACE CLASSES
+
+for key, value in SF_COLORS
+    .sf-{key}
+        background-color: value
+    .sf-darken
+        &.sf-{key}
+            background-color: darken(value, 30%)
+    .sf-lighten
+        &.sf-{key}
+            background-color: lighten(value, 30%)
+    .t-invertible
+        &.tc-{key}
+            background-color: SF_TEXT_INVERSION_COLORS[key]
+    .sf-clickable
+        &.sf-{key}:hover
+            background-color: lighten(value, 30%)
+        &.sf-{key}:focus
+            background-color: darken(value, 30%)
+        &.sf-{key}:active
+            background-color: darken(value, 30%)
+    .sf-border-{key}
+        background-color: 1px solid value
+    .sf-border-bottom-{key}
+        background-color: 1px solid value
+    .sf-border-{key}-darker
+        background-color: 1px solid darken(value, 30%)
+    .sf-border-bottom-{key}-darker
+        background-color: 1px solid darken(value, 30%)
+    .sf-hoverable
+        &.sf-{key}:hover
+            background-color: lighten(value, 30%)
+
+for key, value in SF_COLOR_ACCENTS
+    .sf-oppose.sf-{key}
+        background-color: value
+    .sf-oppose.sf-darken
+        &.sf-{key}
+            background-color: darken(value, 30%)
+    .sf-oppose.sf-lighten
+        &.sf-{key}
+            background-color: lighten(value, 30%)
+    .sf-oppose.t-invertible
+        &.tc-{key}
+            background-color: SF_TEXT_INVERSION_COLORS[key]
+    .sf-oppose.sf-clickable
+        &.sf-{key}:hover
+            background-color: lighten(value, 30%)
+        &.sf-{key}:focus
+            background-color: darken(value, 30%)
+        &.sf-{key}:active
+            background-color: darken(value, 30%)
+    .sf-oppose.sf-border-{key}
+        background-color: 1px solid value
+    .sf-oppose.sf-border-bottom-{key}
+        background-color: 1px solid value
+    .sf-oppose.sf-border-{key}-darker
+        background-color: 1px solid darken(value, 30%)
+    .sf-oppose.sf-border-bottom-{key}-darker
+        background-color: 1px solid darken(value, 30%)
+    .sf-oppose.sf-hoverable
+        &.sf-{key}:hover
+            background-color: lighten(value, 30%)
+
+.sf-border-round
+    border-radius: 5px
+
+.sf-shadow
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+.sf-item-shadow
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+
+
+//CLASS SELECTORS FOR PADDINGS AND MARGINS
+for key, value in LENGTHS
+    .p-{key}
+        padding: value
+    .pr-{key}
+        padding-right: value
+    .pl-{key}
+        padding-left: value
+    .pt-{key}
+        padding-top: value
+    .pb-{key}
+        padding-bottom: value
+    .m-{key}
+        margin: value
+    .mr-{key}
+        margin-right: value
+    .ml-{key}
+        margin-left: value
+    .mt-{key}
+        margin-top: value
+    .mb-{key}
+        margin-bottom: value
+
+//CLASS SELECTORS FOR ALIGNMENT
+for alignment in start end center space-between space-around
+    .justify-content-{alignment}
+        display: flex
+        justify-content: alignment
