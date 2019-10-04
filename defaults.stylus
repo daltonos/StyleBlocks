@@ -23,7 +23,7 @@ SF_COLORS = {
     info: #05bcb4,
     muted: TEXT_COLORS.muted
 }
-SF_COLOR_ACCENTS = {
+SF_COLOR_OPPOSES = {
     highlighted: #FCC443,
     body: white,
     secondary: #FCC443,
@@ -32,26 +32,6 @@ SF_COLOR_ACCENTS = {
     warning: #FCC443,
     info: #05bcb4,
     muted: #f8f9fa
-}
-SF_TEXT_INVERSION_COLORS = {
-    highlighted: white,
-    body: TEXT_COLORS.body,
-    secondary: white,
-    success: white,
-    danger: white,
-    warning: TEXT_COLORS.body,
-    info: white,
-    muted: TEXT_COLORS.body
-}
-SF_TEXT_INVERSION_FOR_OPPOSE = {
-    highlighted: TEXT_COLORS.body,
-    body: TEXT_COLORS.body,
-    secondary: TEXT_COLORS.body,
-    success: TEXT_COLORS.body,
-    danger: white,
-    warning: TEXT_COLORS.body,
-    info: white,
-    muted: TEXT_COLORS.body
 }
 
 //LENGTH CONSTANTS
@@ -71,11 +51,11 @@ for key, value in TEXT_COLORS
 .ts-main-title
     font-size: 1.875rem
 .ts-title
-    font-style: 1.5rem
+    font-size: 1.5rem
 .ts-body
-    font-style: 1rem
+    font-size: 1rem
 .ts-small
-    font-style: 0.8rem
+    font-size: 0.8rem
 .t-bold
     font-weight: bold
 .t-all-caps
@@ -84,73 +64,82 @@ for key, value in TEXT_COLORS
 //SURFACE CLASSES
 
 for key, value in SF_COLORS
+
+    font_color = black
+    if lightness(value) < 60%
+        font_color = white
     .sf-{key}
+        color: font_color
         background-color: value
+
+
     .sf-darken
         &.sf-{key}
             background-color: darken(value, 30%)
     .sf-lighten
         &.sf-{key}
             background-color: lighten(value, 30%)
-    .t-invertible
-        &.tc-{key}
-            background-color: SF_TEXT_INVERSION_COLORS[key]
     .sf-clickable
+        cursor: pointer
         &.sf-{key}:hover
-            background-color: lighten(value, 30%)
+            background-color: darken(value, 20%)
         &.sf-{key}:focus
             background-color: darken(value, 30%)
         &.sf-{key}:active
             background-color: darken(value, 30%)
     .sf-border-{key}
-        background-color: 1px solid value
+        border: 1px solid value
     .sf-border-bottom-{key}
-        background-color: 1px solid value
+        border: 1px solid value
     .sf-border-{key}-darker
-        background-color: 1px solid darken(value, 30%)
+        border: 1px solid darken(value, 30%)
     .sf-border-bottom-{key}-darker
-        background-color: 1px solid darken(value, 30%)
+        border: 1px solid darken(value, 30%)
     .sf-hoverable
         &.sf-{key}:hover
-            background-color: lighten(value, 30%)
+            background-color: darken(value, 20%)
 
-for key, value in SF_COLOR_ACCENTS
+for key, value in SF_COLOR_OPPOSES
+
+    font_color = black
+    if lightness(value) < 60%
+        font_color = white
     .sf-oppose.sf-{key}
+        color: font_color
         background-color: value
+
     .sf-oppose.sf-darken
         &.sf-{key}
             background-color: darken(value, 30%)
     .sf-oppose.sf-lighten
         &.sf-{key}
             background-color: lighten(value, 30%)
-    .sf-oppose.t-invertible
-        &.tc-{key}
-            background-color: SF_TEXT_INVERSION_COLORS[key]
     .sf-oppose.sf-clickable
+        cursor: pointer
         &.sf-{key}:hover
-            background-color: lighten(value, 30%)
+            background-color: darken(value, 20%)
         &.sf-{key}:focus
             background-color: darken(value, 30%)
         &.sf-{key}:active
             background-color: darken(value, 30%)
     .sf-oppose.sf-border-{key}
-        background-color: 1px solid value
+        border: 1px solid value
     .sf-oppose.sf-border-bottom-{key}
-        background-color: 1px solid value
+        border: 1px solid value
     .sf-oppose.sf-border-{key}-darker
-        background-color: 1px solid darken(value, 30%)
+        border: 1px solid darken(value, 30%)
     .sf-oppose.sf-border-bottom-{key}-darker
-        background-color: 1px solid darken(value, 30%)
+        border: 1px solid darken(value, 30%)
     .sf-oppose.sf-hoverable
         &.sf-{key}:hover
-            background-color: lighten(value, 30%)
+            background-color: darken(value, 20%)
 
 .sf-border-round
     border-radius: 5px
 
-.sf-shadow
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 .sf-item-shadow
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+.sf-floating-item-shadow
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
 
 
