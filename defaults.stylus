@@ -1,3 +1,13 @@
+//RULES
+//ONLY include new definitions here if:
+//** 1 - style will be shared across DIFFERENT UI COMPONENTS
+//** 2 - and style includes measurements in units like rem, em, cm, ch etc, or colors. A style like 'text-transform: uppercase' shouldn't be here for example. As this is a trait that can be defined at the component level, using inline styles. And it doesn't depend on any adjustable unit of measure or color.
+//** 3 - and it isn't related to alignment rules. For example, 'justify-content: space-between' or 'text-align: center'. These are supposed to be declared right inside the html, using inline styles.
+
+//NAMING CONVENTIONS
+//Try to use names that mean something in user experience.
+//For example, use sf-highlighted and sf-muted instead of sf-red and sf-grey.
+
 //CONSTANTS
 
 //TEXT COLORS CONSTANTS
@@ -33,33 +43,32 @@ SF_COLOR_OPPOSES = {
     info: #05bcb4,
     muted: #f8f9fa
 }
-
-//LENGTH CONSTANTS
+TEXT_SIZES = {
+    main-title: 1.875em,
+    title: 1.5em,
+    body: 1em,
+    footnote: 0.8em
+}
 LENGTHS = {
-    main: 2rem,
-    normal: 1rem
+    main-title: 2.5em
+    main: 2em,
+    normal: 1em,
+    footnote: 0.5em
 }
 
+border-width = 2px
+border-radius = 5px
 
 //CSS SELECTORS
 
 //TEXT CLASSES
 for key, value in TEXT_COLORS
-    .tc-{key}
-        color: value
+    .t-{key}
+        color: value!important
 
-.ts-main-title
-    font-size: 1.875rem
-.ts-title
-    font-size: 1.5rem
-.ts-body
-    font-size: 1rem
-.ts-small
-    font-size: 0.8rem
-.t-bold
-    font-weight: bold
-.t-all-caps
-    text-transform: uppercase;
+for key, value in TEXT_SIZES
+    .t-{key}
+        font-size: value!important
 
 //SURFACE CLASSES
 
@@ -73,14 +82,24 @@ for key, value in SF_COLORS
         background-color: value
 
 
-    .sf-darken
+    .sf-active, .sf-darken, .sf-focused
         &.sf-{key}
             background-color: darken(value, 30%)
     .sf-lighten
         &.sf-{key}
             background-color: lighten(value, 30%)
     .sf-clickable
-        cursor: pointer
+        &.sf-{key}:hover
+            cursor: pointer
+            background-color: darken(value, 20%)
+        &.sf-{key}:focus
+            cursor: pointer
+            background-color: darken(value, 30%)
+        &.sf-{key}:active
+            cursor: pointer
+            background-color: darken(value, 30%)
+    .sf-inputable
+        cursor: text
         &.sf-{key}:hover
             background-color: darken(value, 20%)
         &.sf-{key}:focus
@@ -88,16 +107,13 @@ for key, value in SF_COLORS
         &.sf-{key}:active
             background-color: darken(value, 30%)
     .sf-border-{key}
-        border: 1px solid value
+        border: border-width solid value
     .sf-border-bottom-{key}
-        border: 1px solid value
+        border: border-width solid value
     .sf-border-{key}-darker
-        border: 1px solid darken(value, 30%)
+        border: border-width solid darken(value, 30%)
     .sf-border-bottom-{key}-darker
-        border: 1px solid darken(value, 30%)
-    .sf-hoverable
-        &.sf-{key}:hover
-            background-color: darken(value, 20%)
+        border: border-width solid darken(value, 30%)
 
 for key, value in SF_COLOR_OPPOSES
 
@@ -108,40 +124,47 @@ for key, value in SF_COLOR_OPPOSES
         color: font_color
         background-color: value
 
-    .sf-oppose.sf-darken
+    .sf-oppose.sf-active, .sf-oppose.sf-darken, .sf-oppose.sf-focused
         &.sf-{key}
             background-color: darken(value, 30%)
     .sf-oppose.sf-lighten
         &.sf-{key}
             background-color: lighten(value, 30%)
     .sf-oppose.sf-clickable
-        cursor: pointer
         &.sf-{key}:hover
+            cursor: pointer
             background-color: darken(value, 20%)
         &.sf-{key}:focus
+            cursor: pointer
             background-color: darken(value, 30%)
         &.sf-{key}:active
+            cursor: pointer
+            background-color: darken(value, 30%)
+    .sf-oppose.sf-inputable
+        &.sf-{key}:hover
+            cursor: text
+            background-color: darken(value, 20%)
+        &.sf-{key}:focus
+            cursor: text
+            background-color: darken(value, 30%)
+        &.sf-{key}:active
+            cursor: text
             background-color: darken(value, 30%)
     .sf-oppose.sf-border-{key}
-        border: 1px solid value
+        border: border-width solid value
     .sf-oppose.sf-border-bottom-{key}
-        border: 1px solid value
+        border: border-width solid value
     .sf-oppose.sf-border-{key}-darker
-        border: 1px solid darken(value, 30%)
+        border: border-width solid darken(value, 30%)
     .sf-oppose.sf-border-bottom-{key}-darker
-        border: 1px solid darken(value, 30%)
-    .sf-oppose.sf-hoverable
-        &.sf-{key}:hover
-            background-color: darken(value, 20%)
+        border: border-width solid darken(value, 30%)
 
 .sf-border-round
-    border-radius: 5px
-
+    border-radius: border-radius
 .sf-item-shadow
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+    box-shadow: 0 .125em .25em rgba(0,0,0,.075)!important;
 .sf-floating-item-shadow
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
-
+    box-shadow: 0 .5em 1em rgba(0,0,0,.15)!important;
 
 //CLASS SELECTORS FOR PADDINGS AND MARGINS
 for key, value in LENGTHS
@@ -165,9 +188,3 @@ for key, value in LENGTHS
         margin-top: value
     .mb-{key}
         margin-bottom: value
-
-//CLASS SELECTORS FOR ALIGNMENT
-for alignment in start end center space-between space-around
-    .justify-content-{alignment}
-        display: flex
-        justify-content: alignment
